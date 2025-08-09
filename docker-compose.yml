@@ -1,0 +1,16 @@
+services:
+  postgres17_uuidv7:
+      image: ghcr.io/fboulnois/pg_uuidv7:1.6.0
+      container_name: postgres17_uuidv7
+      restart: on-failure
+      env_file:
+        - .env
+      environment:
+        - POSTGRES_DB=${POSTGRES_SCHEMA}
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      ports:
+        - "${HOST_PORT}:5432"
+      volumes:
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+        - postgres-data:/var/lib/postgresql/data
